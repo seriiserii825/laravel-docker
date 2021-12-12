@@ -11,7 +11,7 @@ services:
       - ./:/var/www
       - ./docker/nginx/ssl:/etc/nginx/ssl
     ports:
-      - "8088:443"
+      - "8080:443"
     links:
       - php-fpm
 
@@ -37,7 +37,7 @@ services:
     volumes:
       - "./docker/mysql:/var/lib/mysql"
     ports:
-      - "33062:3306"
+      - "33061:3306"
 
   redis:
     image: redis:3.0
