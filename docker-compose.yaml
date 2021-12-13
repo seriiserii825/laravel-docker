@@ -11,7 +11,7 @@ services:
       - ./:/var/www
       - ./docker/nginx/ssl:/etc/nginx/ssl
     ports:
-      - "8080:443"
+      - "8088:443"
     links:
       - php-fpm
 
@@ -19,6 +19,7 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+    container_name: php
     restart: unless-stopped
     tty: true
     working_dir: /var/www
@@ -32,14 +33,25 @@ services:
   mysql:
     image: mysql:5.7
     restart: always
+    container_name: mysql
     environment:
       - "MYSQL_ROOT_PASSWORD=root"
     volumes:
       - "./docker/mysql:/var/lib/mysql"
     ports:
-      - "33061:3306"
+      - "33062:3306"
 
   redis:
     image: redis:3.0
+    container_name: redis
     ports:
       - "63791:6379"
+
+  node:
+    build:
+      context: .
+      dockerfile: docker/node/node.docker
+    container_name: node
+    volumes:
+      - ./:/var/www
+    tty: true
